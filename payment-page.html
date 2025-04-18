@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-white text-center font-sans px-4 py-8">
+
+  <!-- Payment Header Section -->
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold">Payment for Your Purchase</h1>
+    <p class="text-gray-600 mb-4">Please scan the QR code below to complete your payment.</p>
+  </header>
+
+  <!-- QR Code Section -->
+  <section class="mb-8">
+    <h2 class="text-2xl font-semibold mb-4">Scan QR Code</h2>
+    <img src="qr-code-image.jpg" alt="QR Code for Payment" class="mx-auto w-72 h-72 mb-4">
+    <p class="text-gray-600">If you have any issues, please contact us for assistance.</p>
+  </section>
+
+  <!-- Finish Payment Button -->
+  <div>
+    <button id="finishPaymentButton" class="bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded transition duration-300">
+      Finish Payment
+    </button>
+  </div>
+
+  <!-- Email Input Form (hidden initially) -->
+  <div id="emailForm" class="mt-6 hidden max-w-sm mx-auto">
+    <label for="email" class="block text-lg font-medium text-left">Enter your email:</label>
+    <input type="email" id="email" placeholder="you@example.com"
+           class="border border-gray-300 mt-2 p-2 w-full rounded-md" />
+    <button id="submitEmailButton" class="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded w-full transition duration-300">
+      Submit
+    </button>
+  </div>
+
+  <!-- Confirmation Message (hidden initially) -->
+  <div id="confirmationMessage" class="mt-6 hidden text-green-600 font-semibold">
+    Thank you! A confirmation email will be sent after verification.
+  </div>
+
+  <!-- Footer -->
+  <footer class="py-8 bg-gray-200 mt-12">
+    <p class="text-gray-600">© 2025 Australia-China Vendors | All Rights Reserved</p>
+  </footer>
+
+  <!-- Script for handling email input & validation -->
+
+  <script>
+    document.getElementById('finishPaymentButton').addEventListener('click', function () {
+      document.getElementById('finishPaymentButton').style.display = 'none';
+      document.getElementById('emailForm').classList.remove('hidden');
+    });
+  
+    document.getElementById('submitEmailButton').addEventListener('click', function () {
+      const email = document.getElementById('email').value.trim();
+  
+      // Check if email contains '@' symbol
+      if (!email.includes('@')) {
+        alert("Wrong email. Please enter a valid email address with '@'.");
+        return;
+      }
+  
+      // Simple email pattern check (just check for '@' presence)
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/;
+  
+      // Check if the email matches the regex pattern
+      if (!emailRegex.test(email)) {
+        alert("Wrong email. Please enter a valid email address.");
+        return;
+      }
+  
+      // If everything looks good, store the email and show confirmation
+      localStorage.setItem('userEmail', email);
+      console.log("Stored Email:", localStorage.getItem('userEmail'));
+  
+      document.getElementById('emailForm').classList.add('hidden');
+      document.getElementById('confirmationMessage').classList.remove('hidden');
+    });
+  </script>
+  

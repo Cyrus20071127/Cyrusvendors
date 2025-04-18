@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cyrus123hahaha</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      background-color: #f4f4f4;
+    }
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: #333;
+      padding-top: 20px;
+    }
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .sidebar ul li {
+      text-align: center;
+      margin: 15px 0;
+    }
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: block;
+      padding: 10px;
+      transition: background-color 0.3s;
+    }
+    .sidebar ul li a:hover {
+      background-color: #575757;
+    }
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+      width: 100%;
+      background-color: #fff;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #333;
+    }
+    .section {
+      display: none;
+    }
+    .active {
+      display: block;
+    }
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .product-item {
+      background-color: #f9f9f9;
+      padding: 10px;
+      margin: 10px;
+      width: 200px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    .product-item img {
+      width: 100%;
+      height: auto;
+    }
+    .product-item button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .product-item button:hover {
+      background-color: #45a049;
+    }
+    .cart-items img {
+      width: 80px;
+      height: auto;
+    }
+    .cart-item {
+      border-bottom: 1px solid #ccc;
+      padding: 10px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cart-item div {
+      flex: 1;
+      text-align: center;
+    }
+    .cart-total {
+      text-align: right;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .remove-btn {
+      background-color: red;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+    }
+    .quantity {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .quantity button {
+      width: 25px;
+      height: 25px;
+      background-color: #ccc;
+      border: none;
+      cursor: pointer;
+    }
+    .quantity span {
+      margin: 0 5px;
+    }
+    #refreshButton {
+      display: none;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    #refreshButton:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="sidebar">
+    <ul>
+      <li><a href="#" onclick="showSection('home')">Home Page</a></li>
+      <li><a href="#" onclick="showSection('products')">Products</a></li>
+      <li><a href="#" onclick="showSection('cart')">Cart</a></li>
+      <li><a href="#" onclick="showSection('checkout')">Checkout</a></li>
+      <li><a href="#" onclick="showSection('contact')">Contact Page</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <div id="home" class="section active">
+      <h1>Welcome to cyrus123</h1>
+      <p>Your one-stop shop for the best products from Australia.</p>
+    </div>
+
+    <div id="products" class="section">
+      <h2>Our Products</h2>
+      <div class="product-list">
+        <div class="product-item">
+          <img src="denimtears-vendors.jpg" alt="Denim Tears Vendors">
+          <h3>Denim Tears Vendors 1:1</h3>
+          <p>$15.00</p>
+          <button class="add-to-cart" data-name="Denim Tears Vendors 1:1" data-price="15.00" data-image="denimtears-vendors.jpg">Add to Cart</button>
+        </div>
+        <div class="product-item">
+          <img src="https://via.placeholder.com/150" alt="Product 2">
+          <h3>Product 2</h3>
+          <p>$30.00</p>
+          <button class="add-to-cart" data-name="Product 2" data-price="30.00" data-image="https://via.placeholder.com/150">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="cart" class="section">
+      <h2>Your Cart</h2>
+      <div class="cart-items"></div>
+      <div class="cart-total"></div>
+      <div style="text-align: right; margin-top: 20px;">
+        <button onclick="showSection('checkout')" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; cursor: pointer;">Proceed to Checkout</button>
+      </div>
+    </div>
+
+    <div id="checkout" class="section">
+      <h2>Checkout</h2>
+      <p>Scan the QR code below to complete your payment.</p>
+      <div style="text-align: center;">
+        <img src="qr-code-image.jpg" alt="QR Code" style="max-width: 150px;">
+      </div>
+      <button id="finishPaymentButton">Finish Payment</button>
+      <div id="emailForm" style="display: none; margin-top: 20px;">
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <button id="submitEmailButton">Submit</button>
+      </div>
+      <div id="confirmationMessage" style="display: none; margin-top: 20px;">
+        <p>We'll email you once payment is confirmed.</p>
+      </div>
+      <button id="refreshButton" onclick="window.location.reload();">Refresh Page</button>
+    </div>
+
+    <div id="contact" class="section">
+      <h2>Contact Us</h2>
+      <p>Email us at: <strong>cyrusw841@gmail.com</strong></p>
+    </div>
+  </div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if (id === 'cart') updateCartUI();
+    }
+
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const name = btn.dataset.name;
+        const price = parseFloat(btn.dataset.price);
+        const image = btn.dataset.image;
+
+        const existing = cart.find(item => item.name === name);
+        if (existing) {
+          existing.quantity += 1;
+        } else {
+          cart.push({ name, price, image, quantity: 1 });
+        }
+
+        saveCart();
+        alert(`WOW Nice Pick! ${name} added to cart!`);
+      });
+    });
+
+    function updateCartUI() {
+      const container = document.querySelector('.cart-items');
+      container.innerHTML = '';
+      let total = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p>Your cart is empty.</p>';
+        document.querySelector('.cart-total').textContent = '';
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+
+        const div = document.createElement('div');
+        div.classList.add('cart-item');
+        div.innerHTML = `
+          <div><img src="${item.image}" alt="${item.name}"></div>
+          <div>${item.name}</div>
+          <div>$${item.price.toFixed(2)}</div>
+          <div class="quantity">
+            <button onclick="changeQuantity(${index}, -1)">-</button>
+            <span>${item.quantity}</span>
+            <button onclick="changeQuantity(${index}, 1)">+</button>
+          </div>
+          <div><button class="remove-btn" onclick="removeFromCart(${index})">Remove</button></div>
+        `;
+        container.appendChild(div);
+      });
+
+      document.querySelector('.cart-total').textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      saveCart();
+      updateCartUI();
+    }
+
+    function changeQuantity(index, amount) {
+      cart[index].quantity += amount;
+      if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCart();
+      updateCartUI();
+    }
+
+    document.getElementById('finishPaymentButton').addEventListener('click', () => {
+      document.getElementById('finishPaymentButton').style.display = 'none';
+      document.getElementById('emailForm').style.display = 'block';
+    });
+
+    document.getElementById('submitEmailButton').addEventListener('click', () => {
+      const email = document.getElementById('email').value;
+      if (email) {
+        if (email.includes('@')) {
+          document.getElementById('emailForm').style.display = 'none';
+          document.getElementById('confirmationMessage').style.display = 'block';
+          document.getElementById('refreshButton').style.display = 'block'; // Show refresh button
+          localStorage.setItem('userEmail', email);
+        } else {
+          alert("Please enter a valid email address with '@'.");
+        }
+      } else {
+        alert("Please enter a valid email.");
+      }
+    });
+
+    updateCartUI();
+  </script>
+</body>
+</html>
